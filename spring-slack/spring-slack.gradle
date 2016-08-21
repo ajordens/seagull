@@ -1,0 +1,4 @@
+dependencies {
+  compile 'com.ullink.slack:simpleslackapi:0.5.1'
+  compile 'org.springframework:spring-context:4.3.2.RELEASE'
+}

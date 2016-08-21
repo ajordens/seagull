@@ -1,0 +1,47 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath("com.netflix.nebula:gradle-ospackage-plugin:3.7.1")
+	}
+}
+
+allprojects {
+  apply plugin: 'groovy'
+  apply plugin: 'java'
+
+  jar {
+    version = '0.0.1-SNAPSHOT'
+  }
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+
+  repositories {
+    mavenCentral()
+  }
+
+  configurations.all {
+    exclude group: 'javax.servlet', module: 'servlet-api'
+    exclude group: 'javax.servlet', module: 'javax.servlet-api'
+    resolutionStrategy {
+      force 'org.codehaus.groovy:groovy-all:2.4.5'
+      force 'org.spockframework:spock-core:1.0-groovy-2.4'
+    }
+  }
+
+  group = "io.spinnaker.seagull"
+
+  test {
+    testLogging {
+      exceptionFormat = 'full'
+    }
+  }
+}
+
+defaultTasks ':seagull-web:bootRun'
